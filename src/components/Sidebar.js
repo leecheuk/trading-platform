@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 function Sidebar() {
     return (
-        <ul>
+        <ul className="side-bar">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/history">History</Link></li>
             <li><Link to="/settings">Settings</Link></li>

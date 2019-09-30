@@ -18,6 +18,11 @@ a:hover {
   display: flex;
 }
 
+/* Layout */
+.layout-main {
+  padding: 50px;
+}
+
 /* Side bar */
 ul.side-bar {
   background: #333;
@@ -29,3 +34,4 @@ ul.side-bar {
   font-weight: bold;
   padding: 15px 40px;
 }
+

@@ -15,6 +15,7 @@ function createWindow() {
       nodeIntegration: true
     }
   });
+  mainWindow.setMenuBarVisibility(false);
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
   if (isDev) {
     // Open the DevTools.
