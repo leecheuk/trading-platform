@@ -1,14 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import 'bootstrap';
+// components
+import Sidebar from './components/Sidebar';
+// routes
+import {routes} from './router';
 
 function App() {
   return (
     <div className="App">
-      <h1>Trading Platform</h1>
-      
+      <Sidebar />
+      {routes}
     </div>
   );
 }
