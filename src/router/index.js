@@ -6,11 +6,11 @@ import Settings from '../views/Settings';
 import History from '../views/History';
 
 const routes = (
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/settings" component={Settings} />
-                <Route exact path="/history" component={History} />
-            </Switch>
-    );
+    <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/settings" component={Settings} />
+        <Route exact path="/history" component={History} />
+    </Switch>
+);
 
 export {routes};

@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 function History() {
     return (
         <Layout>
-            <h1>History</h1>
+            <h1 className="title">History</h1>
         </Layout>
     )
 }

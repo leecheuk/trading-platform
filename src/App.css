@@ -48,6 +48,11 @@ ul.side-bar {
   padding: 15px 40px;
 }
 
+/* Title */
+h1.title {
+  margin-bottom: 20px;
+}
+
 /* Balance summary */
 .balance-summary {
   text-align: center;
@@ -57,4 +62,24 @@ ul.side-bar {
 }
 .balance-summary .cash, .balance-summary .portfolio {
   font-weight: bold;
+}
+
+/* Block List */
+.block-list-item .main {
+  display: flex;
+  justify-content: space-between;
+}
+.block-list-item .title {
+  font-weight: bold;
+}
+.block-list-item .subtitle {
+  color: #ccc;
+}
+.block-list-item .block-right i {
+  margin-top: 15px;
+  color: #ddd;
+  cursor: pointer;
+}
+.block-list-item .block-right i:hover {
+  color: #777;
 }
