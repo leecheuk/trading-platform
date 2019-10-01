@@ -6,14 +6,14 @@ ul {
 }
 a {
   text-decoration: none;
-  color: #FFF;
+  color: inherit;
 }
 a:hover {
   text-decoration: none;
-  color: rgb(128, 121, 121);
+  color: #FFF;
 }
 a.active {
-  opacity: 0.6;
+  color: #FFF;
 }
 
 /* App */
@@ -43,9 +43,18 @@ ul.side-bar {
   padding-top: 50px;
 }
 .side-bar li {
-  color: #FFF;
+  color: #ccc;
   font-weight: bold;
   padding: 15px 40px;
+  border-left: 4px solid #333;
+  outline-offset: -10px;
+}
+.side-bar li.active {
+  display: block;
+  content: '';
+  border-left: 4px solid #03aef8;
+  color: #FFF;
+  transition: transform 250ms ease-in-out;
 }
 
 /* Title */
@@ -83,3 +92,5 @@ h1.title {
 .block-list-item .block-right i:hover {
   color: #777;
 }
+
+/* Setting form */
