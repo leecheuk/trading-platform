@@ -65,6 +65,7 @@ h1.title {
 /* Balance summary */
 .balance-summary {
   text-align: center;
+  margin-bottom: 15px;
 }
 .balance-summary .total {
   font-size: 50px;

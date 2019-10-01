@@ -35,7 +35,7 @@ function createWindow() {
     }
   });
   db.serialize(() => {
-    db.run('CREATE TABLE watchlist(symbol TEXT)');
+    db.run('CREATE TABLE IF NOT EXISTS watchlist(symbol TEXT)');
   });
 }
 
