@@ -12,15 +12,28 @@ a:hover {
   text-decoration: none;
   color: rgb(128, 121, 121);
 }
+a.active {
+  opacity: 0.6;
+}
 
 /* App */
 .App {
   display: flex;
+  background-color: #f7f8fb;
 }
 
-/* Layout */
+/* Layout Main */
 .layout-main {
   padding: 50px;
+  width: 100%;
+}
+
+/* Layout Block */
+.layout-block {
+  background-color: #FFF;    
+  box-shadow: 0px 2px 4px 0px #ddd;
+  border-radius: 7px;
+  padding: 15px;
 }
 
 /* Side bar */
@@ -35,3 +48,13 @@ ul.side-bar {
   padding: 15px 40px;
 }
 
+/* Balance summary */
+.balance-summary {
+  text-align: center;
+}
+.balance-summary .total {
+  font-size: 50px;
+}
+.balance-summary .cash, .balance-summary .portfolio {
+  font-weight: bold;
+}
