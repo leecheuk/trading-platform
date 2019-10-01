@@ -23,11 +23,31 @@ function createWindow() {
     mainWindow.webContents.openDevTools();
   }
   mainWindow.on('closed', () => mainWindow = null);
+
+  // db
+  const sqlite3 = require('sqlite3');
+
+  let db = new sqlite3.Database('./db/app.db', (err) => {
+    if (err) {
+      return console.error(err.message);
+    } else {
+      console.log('Connected to the app.db SQlite database.');
+    }
+  });
+  db.serialize(() => {
+    db.run('CREATE TABLE watchlist(symbol TEXT)');
+  });
 }
 
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
+  db.close((err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
   if (process.platform !== 'darwin') {
     app.quit();
   }

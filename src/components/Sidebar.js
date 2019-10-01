@@ -7,9 +7,9 @@ function Sidebar() {
     const path = history.location.pathname;
     return (
         <ul className="side-bar">
-            <li><Link to="/" className={path == "/" ? "active" : null}>Home</Link></li>
-            <li><Link to="/history" className={path == "/history" ? "active" : null}>History</Link></li>
-            <li><Link to="/settings" className={path == "/settings" ? "active" : null}>Settings</Link></li>
+            <li className={path == "/" ? "active" : null}><Link to="/">Home</Link></li>
+            <li className={path == "/history" ? "active" : null}><Link to="/history">History</Link></li>
+            <li className={path == "/settings" ? "active" : null}><Link to="/settings">Settings</Link></li>
         </ul>
     )
 }
