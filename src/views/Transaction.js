@@ -5,15 +5,16 @@ import Layout from "../components/Layout";
 import LayoutBlock from "../components/LayoutBlock";
 import Watchlist from "../containers/Watchlist";
 
-function Home(props) {
+function Transaction(props) {
+    console.log(props);
     return (
         <Layout>
-            <BalanceSummary/>
+            <h1 className="title">Purchase</h1>
             <LayoutBlock>
-                <Watchlist history={props.history}/>
+
             </LayoutBlock>
         </Layout>
     )
 }
 
-export default Home;
+export default Transaction;

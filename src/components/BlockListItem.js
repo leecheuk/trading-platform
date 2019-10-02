@@ -14,7 +14,8 @@ function BlockListItem(props) {
                     <div className="subtitle">{props.subtitle}</div>
                 </div>
                 <div className="block-right">
-                    <i className={`fas fa-angle-${showMinor ? "down" : "right"} fa-lg`} onClick={onClickItem}></i>
+                    <i className={`fas fa-angle-${showMinor ? "down" : "right"} fa-lg`} 
+                        onClick={props.onClickItem ? props.onClickItem : onClickItem}></i>
                 </div>
             </div>
             {showMinor ? <div className="minor">

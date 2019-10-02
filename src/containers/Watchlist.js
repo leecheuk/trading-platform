@@ -10,6 +10,9 @@ function Watchlist(props) {
     const onChangeQuery = (e) => {
         setQuery(e.target.value);
     };
+    const onClickItem = (symbol) => {
+        props.history.push(`/transaction/${symbol}`);
+    };
 
     const [data, setData] = useState([]);
     useEffect(() => {
@@ -30,7 +33,8 @@ function Watchlist(props) {
             <Search query={query} onChangeQuery={onChangeQuery}/>
             <BlockList>
                 {data.length > 0 ? data.map((stock, i) => 
-                    <BlockListItem key={i} title={`${stock["2. name"]} (${stock["1. symbol"]})`} />    
+                    <BlockListItem key={i} title={`${stock["2. name"]} (${stock["1. symbol"]})`}
+                        onClickItem={onClickItem.bind(stock["1. symbol"])} />    
                 ) : null}
             </BlockList>
         </>
