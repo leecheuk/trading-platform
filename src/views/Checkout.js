@@ -1,20 +1,19 @@
 import React from "react";
 // components
-import BalanceSummary from "../components/BalanceSummary";
 import Layout from "../components/Layout";
 import LayoutBlock from "../components/LayoutBlock";
-import Watchlist from "../containers/Watchlist";
+import Transaction from "../containers/Transaction";
 
-function Transaction(props) {
+function Checkout(props) {
     console.log(props);
     return (
         <Layout>
             <h1 className="title">Purchase</h1>
             <LayoutBlock>
-
+                <Transaction history={props.history}/>
             </LayoutBlock>
         </Layout>
     )
 }
 
-export default Transaction;
+export default Checkout;

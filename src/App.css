@@ -108,3 +108,15 @@ h1.title {
 .setting-form {
   margin-top: 15px;
 }
+
+/* Transaction form */
+.checkout-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+.checkout-btns button.btn:first-child {
+  margin-right: 10px;
+}
+.transaction-table td:last-child {
+  text-align: right;
+}
