@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import iex from "../api/iex";
 import Search from "../components/Search";
-import util from "../util";
+import BlockList from "../components/BlockList";
+import BlockListItem from "../components/BlockListItem";
 
 function Watchlist(props) {
     const [data, setData] = useState([]);
@@ -16,6 +17,11 @@ function Watchlist(props) {
     return (
         <>
             <Search data={data}/>
+            <BlockList>
+                {data.splice(0, 10).map((stock) => 
+                    <BlockListItem title={stock.name} />    
+                )}
+            </BlockList>
         </>
     );
 }

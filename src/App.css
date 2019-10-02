@@ -15,6 +15,9 @@ a:hover {
 a.active {
   color: #FFF;
 }
+body {
+  overflow: hidden;
+}
 
 /* App */
 .App {
@@ -75,6 +78,14 @@ h1.title {
 }
 
 /* Block List */
+.block-list {
+  max-height: 350px;
+  overflow-y: auto;
+}
+.block-list-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
 .block-list-item .main {
   display: flex;
   justify-content: space-between;
@@ -86,7 +97,6 @@ h1.title {
   color: #ccc;
 }
 .block-list-item .block-right i {
-  margin-top: 15px;
   color: #ddd;
   cursor: pointer;
 }
