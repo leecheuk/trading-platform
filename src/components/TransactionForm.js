@@ -4,7 +4,7 @@ function TransactionForm(props) {
     const {price, quantity, symbol, name} = props;
     const subtotal = price*quantity;
     const total = subtotal + 7;
-    const stockName = `${props.name} (${props.symbol})`;
+    const stockName = `${name} (${symbol})`;
     return (
         <table className="table table-hover table-condensed transaction-table">
             <thead>

@@ -21,7 +21,7 @@ function Watchlist(props) {
             const stocks = await alpha.getData(url);
             setData(stocks.bestMatches);
         }
-        if (query != "" && process.env.NODE_ENV !== "development") {
+        if (query !== "" && process.env.NODE_ENV !== "development") {
             fetchData();
         } else {
             setData(search_results.bestMatches);

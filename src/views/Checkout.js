@@ -5,7 +5,6 @@ import LayoutBlock from "../components/LayoutBlock";
 import Transaction from "../containers/Transaction";
 
 function Checkout(props) {
-    console.log(props);
     return (
         <Layout>
             <h1 className="title">Purchase</h1>
