@@ -79,7 +79,7 @@ h1.title {
 
 /* Block List */
 .block-list {
-  max-height: 350px;
+  height: 350px;
   overflow-y: auto;
 }
 .block-list-item {
