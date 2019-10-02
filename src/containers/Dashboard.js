@@ -1,11 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import alpha from "../api/alpha";
 import Search from "../components/Search";
 import BlockList from "../components/BlockList";
 import BlockListItem from "../components/BlockListItem";
+import SearchList from "../components/SearchList";
+import WatchList from "../components/WatchList";
+import PortfolioList from "../components/PortfolioList";
+
+// dummy data
 import search_results from "../seed/search.json";
 
-function Watchlist(props) {
+function Dashboard(props) {
     const [query, setQuery] = useState("");
     const onChangeQuery = (e) => {
         setQuery(e.target.value);
@@ -30,15 +35,11 @@ function Watchlist(props) {
 
     return (
         <>
-            <Search query={query} onChangeQuery={onChangeQuery}/>
-            <BlockList>
-                {data.length > 0 ? data.map((stock, i) => 
-                    <BlockListItem key={i} title={`${stock["2. name"]} (${stock["1. symbol"]})`}
-                        onClickItem={onClickItem.bind(stock["1. symbol"])} />    
-                ) : null}
-            </BlockList>
+            <Search query={query} onChangeQuery={onChangeQuery} />
+            {query !== "" ? <SearchList data={data} onClickItem={onClickItem} /> : null}
+            
         </>
     );
 }
 
-export default Watchlist;
+export default Dashboard;

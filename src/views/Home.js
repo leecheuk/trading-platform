@@ -3,14 +3,14 @@ import React from "react";
 import BalanceSummary from "../components/BalanceSummary";
 import Layout from "../components/Layout";
 import LayoutBlock from "../components/LayoutBlock";
-import Watchlist from "../containers/Watchlist";
+import Dashboard from "../containers/Dashboard";
 
 function Home(props) {
     return (
         <Layout>
             <BalanceSummary/>
             <LayoutBlock>
-                <Watchlist history={props.history}/>
+                <Dashboard history={props.history}/>
             </LayoutBlock>
         </Layout>
     )
