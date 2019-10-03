@@ -91,6 +91,9 @@ h1.title {
   display: flex;
   justify-content: space-between;
 }
+.block-list-item .block-left {
+  display: flex;
+}
 .block-list-item .title {
   font-weight: bold;
 }
@@ -126,6 +129,9 @@ h1.title {
 }
 
 /* Search list */
+.fav {
+  margin: auto;
+}
 .fav i {
   color: #ccc;
   cursor: pointer;
@@ -133,4 +139,23 @@ h1.title {
 }
 .fav i:hover, .fav.active i {
   color: #f783ac;
+}
+
+/* Nav tab */
+.nav-tab {
+  display: flex;
+}
+
+.nav-tab .tab {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 10px;
+  padding-bottom: 5px;
+  border-bottom: 4px solid #fafafa;
+  font-weight: bold;
+  color: #777;
+}
+.nav-tab .tab:hover, .nav-tab .tab.active {
+  border-bottom: 4px solid #03aef8;
 }

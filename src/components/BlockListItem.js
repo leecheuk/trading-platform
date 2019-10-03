@@ -14,11 +14,13 @@ function BlockListItem(props) {
                     <li className="block-list-item">
                         <div className="main">
                             <div className="block-left">
-                                <div className="title"><span className="fav">
-                                    <i className="fas fa-heart fa-lg"></i> 
-                                    </span> {props.title}
+                                <span className="fav">
+                                    <i className="fas fa-heart fa-lg"></i>
+                                </span>
+                                <div className="text-container">
+                                    <div className="title"> {props.title}</div>
+                                    <div className="subtitle">{props.subtitle}</div>
                                 </div>
-                                <div className="subtitle">{props.subtitle}</div>
                             </div>
                             <div className="block-right">
                                 <i className={`fas fa-angle-${showMinor ? "down" : "right"} fa-lg`}
@@ -35,11 +37,13 @@ function BlockListItem(props) {
                     <li className="block-list-item">
                         <div className="main">
                             <div className="block-left">
-                                <div className="title">{props.title}</div>
-                                <div className="subtitle">
-                                    <span className="quote">{parseFloat(props.quote).toFixed(2)}</span> ● 
-                                    <span className="gain"> {`${1.2}%`}</span> ● 
+                                <div className="text-container">
+                                    <div className="title">{props.title}</div>
+                                    <div className="subtitle">
+                                        <span className="quote">{parseFloat(props.quote).toFixed(2)}</span> ●
+                                    <span className="gain"> {`${1.2}%`}</span> ●
                                     <span className="quantity"> {props.quantity}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="block-right">
@@ -53,19 +57,23 @@ function BlockListItem(props) {
                     <li className="block-list-item">
                         <div className="main">
                             <div className="block-left">
-                                <div className="title">{props.title}</div>
-                                <div className="subtitle">
-                                    <span>{props.quote}</span> {`${1.2}%`}
+                                <span className="fav">
+                                    <i className="fas fa-heart fa-lg"></i>
+                                </span>
+                                <div className="text-container">
+                                    <div className="title"> {props.title} </div>
+                                    <div className="subtitle">
+                                        <span className="quote">{parseFloat(props.quote).toFixed(2)}</span> ●
+                                    <span className="gain"> {`${1.2}%`}</span> ●
+                                    <span className="quantity"> {props.quantity}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="block-right">
-                                    <button className="btn btn-info btn-sm">Sell</button>
+                                <button className="btn btn-info btn-sm" onClick={props.onClickItem.bind(null, props.symbol)}>Buy</button>
                             </div>
-                            </div>
-                                {showMinor?<div className = "minor">
-                                    { props.minor() }
-                                </div> : null}
-                        </li >
+                        </div>
+                    </li >
                 );
             default:
                 return (
