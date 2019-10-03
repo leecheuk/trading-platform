@@ -39,6 +39,9 @@ body {
   padding: 15px;
   max-height: 500px;
 }
+.layout-block input {
+  margin-bottom: 10px;
+}
 .block-container {
   height: 450px;
   overflow-y: auto;
@@ -86,7 +89,6 @@ h1.title {
 .block-list {
   height: 350px;
   overflow-y: auto;
-  margin-top: 10px;
 }
 .block-list-item {
   border-bottom: 1px solid #eee;
@@ -155,7 +157,6 @@ h1.title {
   flex: 1;
   text-align: center;
   cursor: pointer;
-  margin-top: 10px;
   padding-bottom: 5px;
   border-bottom: 4px solid #fafafa;
   font-weight: bold;
