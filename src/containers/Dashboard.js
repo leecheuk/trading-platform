@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import alpha from "../api/alpha";
 import Search from "../components/Search";
-import BlockList from "../components/BlockList";
-import BlockListItem from "../components/BlockListItem";
 import SearchList from "../components/SearchList";
-import WatchList from "../components/WatchList";
 import PortfolioList from "../components/PortfolioList";
 
 // dummy data

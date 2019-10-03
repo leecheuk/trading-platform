@@ -8,7 +8,8 @@ function SearchList(props) {
         <BlockList>
             {data.length > 0 ? data.map((stock, i) =>
                 <BlockListItem key={i} title={`${stock["2. name"]} (${stock["1. symbol"]})`}
-                    onClickItem={props.onClickItem.bind(stock["1. symbol"])} />
+                    onClickItem={props.onClickItem.bind(stock["1. symbol"])} 
+                    type={"searchlist"}/>
             ) : null}
         </BlockList>
     );

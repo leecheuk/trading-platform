@@ -124,3 +124,13 @@ h1.title {
 .transaction-table td:last-child {
   text-align: right;
 }
+
+/* Search list */
+.fav i {
+  color: #ccc;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.fav i:hover, .fav.active i {
+  color: #f783ac;
+}
