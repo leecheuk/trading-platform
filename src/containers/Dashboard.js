@@ -16,7 +16,7 @@ function Dashboard(props) {
         setQuery(e.target.value);
     };
     const onClickItem = (symbol) => {
-        props.history.push(`/transaction/${symbol}`);
+        props.history.push(`/transaction/${symbol}?type=Purchase`);
     };
 
     const [data, setData] = useState([]);
@@ -33,11 +33,18 @@ function Dashboard(props) {
         }
     }, [query]);
 
+    const onClickSell = (symbol) => {
+        props.history.push(`/transaction/${symbol}?type=Sell`);
+    }
+
+    const isDev = (process.env.NODE_ENV === "development");
+    const portfolio = isDev ? search_results.bestMatches : data;
+
     return (
         <>
             <Search query={query} onChangeQuery={onChangeQuery} />
             {query !== "" ? <SearchList data={data} onClickItem={onClickItem} /> : null}
-            
+            {query !== "" ? null : <PortfolioList data={portfolio} onClickSell={onClickSell} />}
         </>
     );
 }

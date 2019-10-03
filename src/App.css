@@ -81,6 +81,7 @@ h1.title {
 .block-list {
   height: 350px;
   overflow-y: auto;
+  margin-top: 10px;
 }
 .block-list-item {
   border-bottom: 1px solid #eee;
