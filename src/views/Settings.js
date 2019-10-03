@@ -6,14 +6,15 @@ import BlockListItem from "../components/BlockListItem";
 import SettingForm from "../components/SettingForm";
 
 function Settings() {
+    const API_KEY = (process.env.NODE_ENV === "development") ? process.env.REACT_APP_ALPHA_API_KEY : "";
     return (
         <Layout>
             <h1 className="title">Settings</h1>
             <LayoutBlock>
                 <BlockList>
                     <BlockListItem 
-                        title="IEX API Token" 
-                        subtitle={`Current token: ${process.env.REACT_APP_API_TOKEN}`}
+                        title="API Key" 
+                        subtitle={`Current key: ${API_KEY}`}
                         minor={SettingForm}
                         />
                 </BlockList>

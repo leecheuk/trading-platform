@@ -27,6 +27,9 @@ function Transaction(props) {
     function onClickCancel() {
         props.history.push('/');
     }
+    function onClickSubmit() {
+        props.history.push('/');
+    }
     return (
             <>
                 <TransactionForm 
@@ -35,7 +38,7 @@ function Transaction(props) {
                     name={"Apple Inc"}
                     quantity={quantity} 
                     onChangeQuantity={onChangeQuantity}/>
-                <CheckoutBtns onClickCancel={onClickCancel} />
+                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} />
             </>
     )
 }

@@ -80,8 +80,10 @@ function BlockListItem(props) {
                     <li className="block-list-item">
                         <div className="main">
                             <div className="block-left">
-                                <div className="title">{props.title}</div>
-                                <div className="subtitle">{props.subtitle}</div>
+                                <div className="text-container">
+                                    <div className="title">{props.title}</div>
+                                    <div className="subtitle">{props.subtitle}</div>
+                                </div>
                             </div>
                             <div className="block-right">
                                 <i className={`fas fa-angle-${showMinor ? "down" : "right"} fa-lg`}
