@@ -11,8 +11,8 @@ function BlockListItem(props) {
 
     function renderView() {
         const {stock, quote} = props;
-        const title = `${stock.name} (${stock.symbol})`;
-        const favourite = stock.isFavourite;
+        const title = props.title || `${stock.name} (${stock.symbol})`;
+        const favourite = stock ? stock.isFavourite : null;
 
         switch(props.type) {
             case "searchlist":

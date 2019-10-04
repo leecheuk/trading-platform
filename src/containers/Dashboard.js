@@ -30,30 +30,43 @@ function Dashboard(props) {
     // data
     const [data, setData] = useState([]);
     useEffect(() => {
+        let isSubscribed = true;
         const fetchData = async () => {
-            const url = alpha.getSearchURL(query);
-            const stocks = await alpha.getData(url);
-            setData(alpha.sanitizeSearch(stocks));
+                const url = alpha.getSearchURL(query);
+                const stocks = await alpha.getData(url);
+            if (isSubscribed) {
+                setData(alpha.sanitizeSearch(stocks));
+            }
         }
         fetchData();
+        return () => {
+            isSubscribed = false
+        }
     }, [query]);
 
     // favourite
     const [favs, setFavs] = useState([]);
     const onClickFavourite = (args) => {
+        let isSubscribed = true;
         var stock = {
             ...args,
             isFavourite: !args.isFavourite
         }
         db.favouriteStock(stock, (row) => {
-            setFavs(row);
+            if (isSubscribed) {
+                setFavs(row);
+            }
         });
     }
     useEffect(() => {
+        let isSubscribed = true;
         db.getFavourites((row) => {
-            setFavs(row);
+            if (isSubscribed) {
+                setFavs(row);
+            }
         });
         return () => {
+            isSubscribed = false;
             db.removeFavouriteListener();
         }
     }, []);
