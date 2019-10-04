@@ -24,18 +24,21 @@ function Dashboard(props) {
     const onClickItem = (symbol) => {
         props.history.push(`/transaction/${symbol}?type=Purchase`);
     };
+    const onClickCancel = () => {
+        setQuery("");
+    }
     // data
     const [data, setData] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             const url = alpha.getSearchURL(query);
             const stocks = await alpha.getData(url);
-            setData(stocks.bestMatches);
+            setData(alpha.sanitizeSearch(stocks));
         }
         if (query !== "" && process.env.NODE_ENV !== "development") {
             fetchData();
         } else {
-            setData(search_results.bestMatches);
+            setData(alpha.sanitizeSearch(search_results));
         }
     }, [query]);
 
@@ -66,7 +69,6 @@ function Dashboard(props) {
 
     const isDev = (process.env.NODE_ENV === "development");
     const portfolio = isDev ? search_results.bestMatches : data;
-    const watchStocks = isDev ? search_results.bestMatches : data;
 
     function renderList() {
         if (query === "") {
@@ -90,11 +92,18 @@ function Dashboard(props) {
         <>
             <Search query={query} onChangeQuery={onChangeQuery} />
             {query !== "" ? null : <NavTab tab={tab} onClickTab={onClickTab}/>}
-            {query !== "" ? <SearchList 
+            {query !== "" ?
+                    <> 
+                        <SearchList 
                                 favs={favs}
                                 data={data} 
                                 onClickItem={onClickItem} 
-                                onClickFavourite={onClickFavourite}/> : null}
+                                onClickFavourite={onClickFavourite} />
+                        <div className="cancel-container">
+                            <i className="fas fa-times-circle fa-lg" onClick={onClickCancel}></i>
+                        </div>
+                    </>
+                    : null}
             {renderList()}
         </>
     );

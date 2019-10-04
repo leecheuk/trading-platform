@@ -31,7 +31,6 @@ const db = {
     _getResource: (resource, callback) => {
         ipcRenderer.send(`get-${resource}`);
         ipcRenderer.on(resource, (e, res) => {
-            console.log(resource, res);
             callback(res);
         });
     }

@@ -46,7 +46,10 @@ function BlockListItem(props) {
                                 </div>
                             </div>
                             <div className="block-right">
-                                    <button className="btn btn-info btn-sm" onClick={props.onClickSell.bind(null, props.symbol)}>Sell</button>
+                                    <button className="btn btn-info btn-sm" 
+                                        onClick={props.onClickSell.bind(null, props.symbol)}>
+                                            Sell
+                                    </button>
                             </div>
                             </div>
                         </li >

@@ -39,6 +39,16 @@ body {
   padding: 15px;
   max-height: 500px;
 }
+.cancel-container {
+  display: flex;
+  justify-content: center;
+  color: #ddd;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.cancel-container i:hover {
+  color: #777;
+}
 .layout-block input {
   margin-bottom: 10px;
 }

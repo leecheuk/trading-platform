@@ -9,15 +9,15 @@ function SearchList(props) {
         <BlockList>
             {data.length > 0 ? data.map((stock, i) => {
                 const s = {
-                    name: stock["2. name"],
-                    symbol: stock["1. symbol"],
+                    name: stock.name,
+                    symbol: stock.symbol,
                     isFavourite: false
                 }
                 const f = props.favs.map(fav => fav.symbol);
                 if (f.indexOf(s.symbol) < 0) {
                     return (
-                        <BlockListItem key={i} title={`${stock["2. name"]} (${stock["1. symbol"]})`}
-                            onClickItem={props.onClickItem.bind(stock["1. symbol"])}
+                        <BlockListItem key={i} title={`${stock.name} (${stock.symbol})`}
+                            onClickItem={props.onClickItem.bind(stock.symbol)}
                             favs={props.favs}
                             onClickFavourite={props.onClickFavourite.bind(null, s)}
                             type={"searchlist"} />
