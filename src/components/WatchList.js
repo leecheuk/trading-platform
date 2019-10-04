@@ -6,11 +6,16 @@ function WatchList(props) {
     const {data} = props;
     return (
         <BlockList>
-            {data.length > 0 ? data.map((stock, i) =>
-                <BlockListItem key={i} title={`${stock["2. name"]} (${stock["1. symbol"]})`}
-                    quote={122}
-                    onClickItem={props.onClickItem.bind(stock["1. symbol"])} type={"watchlist"}/>
-            ) : null}
+            {data.length > 0 ? data.map((stock, i) => {
+                return (
+                    <BlockListItem key={i} title={`${stock.name} (${stock.symbol})`}
+                        quote={"NA"}
+                        favourite={stock.isFavourite}
+                        onClickFavourite={props.onClickFavourite.bind(null, stock)}
+                        onClickItem={props.onClickItem.bind(stock.symbol)} 
+                        type={"watchlist"}/>
+                    );
+            }) : null}
         </BlockList>
     );
 }

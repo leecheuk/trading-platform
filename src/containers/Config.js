@@ -15,10 +15,7 @@ function Config() {
         return () => {
             db.removeAPIListener();
         }
-    }, [curApi])
-    // const api = db.getAPI((api) => {
-    //     setCurApi(api);
-    // });
+    }, [curApi]);
     function onChangeAPI(e) {
         setApiKey(e.target.value);
     }

@@ -22,7 +22,7 @@ const database = () => {
         });
     });
     
-    return {
+    const ret = {
         initializeUser: (transaction_fee=7, initial_balance=10000, api_key=null) => {
             var sql = "INSERT INTO Users (transaction_fee, initial_balance, api_key) " + 
                 "VALUES (?, ?, ?)";
@@ -58,9 +58,52 @@ const database = () => {
                     console.log(err);
                 }
                 callback(row["api_key"]);
-            })
+            });
+        },
+        favouriteStock: (stock, callback) => {
+            var {name, symbol, isFavourite} = stock;
+            ret._hasStock(stock, (row) => {
+                if (!row) {
+                    var sql = "INSERT INTO Stocks (name, symbol, isFavourite, inPortfolio) VALUES (?, ?, ?, ?)";
+                    db.run(sql, [name, symbol, isFavourite, false], (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        ret.getFavourites(callback);
+                    });
+                } else {
+                    var sql = "UPDATE Stocks SET isFavourite = ? WHERE symbol = ?";
+                    db.run(sql, [isFavourite, symbol], (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        ret.getFavourites(callback);
+                    });
+                }
+            });
+        },
+        _hasStock: (stock, callback) => {
+            var { name, symbol, isFavourite } = stock;
+            var sql = "SELECT * FROM Stocks WHERE symbol = ?";
+
+            db.get(sql, symbol, (err, row) => {
+                if (err) {
+                    console.log(err);
+                }
+                callback(row);
+            });
+        },
+        getFavourites: (callback) => {
+            var sql = "SELECT * FROM Stocks WHERE isFavourite = true";
+            db.all(sql, (err, row) => {
+                if (err) {
+                    console.log(err);
+                }
+                callback(row);
+            });
         }
     }
+    return ret;
 }
 
 

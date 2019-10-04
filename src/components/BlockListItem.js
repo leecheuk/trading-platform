@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SettingForm from "../components/SettingForm";
+import FavouriteBtn from "../components/FavouriteBtn";
 
 function BlockListItem(props) {
     const [showMinor, setMinor] = useState(false);
@@ -15,9 +16,9 @@ function BlockListItem(props) {
                     <li className="block-list-item">
                         <div className="main">
                             <div className="block-left">
-                                <span className="fav">
-                                    <i className="fas fa-heart fa-lg"></i>
-                                </span>
+                                <FavouriteBtn 
+                                    onClickFavourite={props.onClickFavourite} 
+                                    favourite={props.favourite}/>
                                 <div className="text-container">
                                     <div className="title"> {props.title}</div>
                                     <div className="subtitle">{props.subtitle}</div>
@@ -55,9 +56,9 @@ function BlockListItem(props) {
                     <li className="block-list-item">
                         <div className="main">
                             <div className="block-left">
-                                <span className="fav">
-                                    <i className="fas fa-heart fa-lg"></i>
-                                </span>
+                                <FavouriteBtn
+                                    onClickFavourite={props.onClickFavourite}
+                                    favourite={props.favourite} />
                                 <div className="text-container">
                                     <div className="title"> {props.title} </div>
                                     <div className="subtitle">

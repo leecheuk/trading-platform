@@ -38,11 +38,21 @@ function createWindow() {
   });
   ipcMain.on('update-api', (e, apiKey) => {
     db.updateAPI(apiKey);
-  })
+  });
   ipcMain.on('get-api', (e) => {
     db.getAPI((api) => {
-      e.reply('api-key', api);
+      e.reply('api', api);
     });
+  });
+  ipcMain.on('favourite-stock', (e, stock) => {
+    db.favouriteStock(stock, (fav) => {
+      e.reply('favourites', fav);
+    });
+  })
+  ipcMain.on('get-favourites', (e) => {
+    db.getFavourites((fav) => {
+      e.reply('favourites', fav);
+    })
   })
 }
 

@@ -144,7 +144,7 @@ h1.title {
   cursor: pointer;
   margin-right: 10px;
 }
-.fav i:hover, .fav.active i {
+.fav i:hover, .fav i.active {
   color: #f783ac;
 }
 

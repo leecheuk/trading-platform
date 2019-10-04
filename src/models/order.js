@@ -1,6 +1,7 @@
 const orderSchema = `
     CREATE TABLE IF NOT EXISTS Orders (
         id INTEGER NOT NULL PRIMARY KEY,
+        date DATE DEFAULT CURRENT_TIMESTAMP,
         type TEXT NOT NULL,
         stock_id INTEGER NOT NULL UNIQUE,
         price REAL NOT NULL,

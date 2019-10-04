@@ -5,6 +5,7 @@ import SearchList from "../components/SearchList";
 import PortfolioList from "../components/PortfolioList";
 import WatchList from "../components/WatchList";
 import NavTab from "../components/NavTab";
+import db from "../api/db";
 
 // dummy data
 import search_results from "../seed/search.json";
@@ -38,6 +39,27 @@ function Dashboard(props) {
         }
     }, [query]);
 
+    // favourite
+    const [favs, setFavs] = useState([]);
+    const onClickFavourite = (args) => {
+        var stock = {
+            ...args,
+            isFavourite: !args.isFavourite
+        }
+        db.favouriteStock(stock, (row) => {
+            setFavs(row);
+        });
+    }
+    useEffect(() => {
+        db.getFavourites((row) => {
+            setFavs(row);
+        });
+        return () => {
+            db.removeFavouriteListener();
+        }
+    }, []);
+
+    // sell
     const onClickSell = (symbol) => {
         props.history.push(`/transaction/${symbol}?type=Sell`);
     }
@@ -55,7 +77,10 @@ function Dashboard(props) {
                     );
                 case "watchlist":
                     return (
-                        <WatchList data={watchStocks} onClickItem={onClickItem} />
+                        <WatchList 
+                            onClickFavourite={onClickFavourite}
+                            data={favs} 
+                            onClickItem={onClickItem} />
                     );
             }
         }
@@ -65,7 +90,11 @@ function Dashboard(props) {
         <>
             <Search query={query} onChangeQuery={onChangeQuery} />
             {query !== "" ? null : <NavTab tab={tab} onClickTab={onClickTab}/>}
-            {query !== "" ? <SearchList data={data} onClickItem={onClickItem} /> : null}
+            {query !== "" ? <SearchList 
+                                favs={favs}
+                                data={data} 
+                                onClickItem={onClickItem} 
+                                onClickFavourite={onClickFavourite}/> : null}
             {renderList()}
         </>
     );
