@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import SettingForm from "../components/SettingForm";
 
 function BlockListItem(props) {
     const [showMinor, setMinor] = useState(false);
@@ -27,9 +28,6 @@ function BlockListItem(props) {
                                     onClick={props.onClickItem ? props.onClickItem : onClickItem}></i>
                             </div>
                         </div>
-                        {showMinor ? <div className="minor">
-                            {props.minor()}
-                        </div> : null}
                     </li>
                 );
             case "portfoliolist":
@@ -91,7 +89,10 @@ function BlockListItem(props) {
                             </div>
                         </div>
                         {showMinor ? <div className="minor">
-                            {props.minor()}
+                            <SettingForm 
+                                onSubmitAPI={props.onSubmitAPI}
+                                onChangeAPI={props.onChangeAPI} 
+                                apiKey={props.apiKey}/>
                         </div> : null}
                     </li>
                 );

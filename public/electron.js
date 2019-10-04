@@ -5,6 +5,9 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const isDev = require('electron-is-dev');
 
+// db
+const database = require('../src/controllers');
+
 let mainWindow;
 
 function createWindow() {
@@ -26,18 +29,21 @@ function createWindow() {
   mainWindow.on('closed', () => mainWindow = null);
 
   // db
-  const sqlite3 = require('sqlite3');
-
-  let db = new sqlite3.Database('./db/app.db', (err) => {
-    if (err) {
-      return console.error(err.message);
-    } else {
-      console.log('Connected to the app.db SQlite database.');
+  const db = database();
+  const ipcMain = electron.ipcMain;
+  db.getUser((row) => {
+    if (!row) {
+      db.initializeUser();
     }
   });
-  db.serialize(() => {
-    db.run('CREATE TABLE IF NOT EXISTS watchlist(symbol TEXT)');
-  });
+  ipcMain.on('update-api', (e, apiKey) => {
+    db.updateAPI(apiKey);
+  })
+  ipcMain.on('get-api', (e) => {
+    db.getAPI((api) => {
+      e.reply('api-key', api);
+    });
+  })
 }
 
 app.on('ready', createWindow);
