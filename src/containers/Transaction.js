@@ -11,8 +11,8 @@ function Transaction(props) {
     useEffect(() => {
         const fetchData = async () => {
             const url = alpha.getQuoteURL(symbol);
-            const data = await alpha.getData(url);
-            setData(data["Global Quote"]);
+            const stock = await alpha.getData(url);
+            setData(stock["Global Quote"]);
         }
         if (process.env.NODE_ENV !== "development") {
             fetchData();

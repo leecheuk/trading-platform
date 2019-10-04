@@ -16,7 +16,9 @@ function SearchList(props) {
                 const f = props.favs.map(fav => fav.symbol);
                 if (f.indexOf(s.symbol) < 0) {
                     return (
-                        <BlockListItem key={i} title={`${stock.name} (${stock.symbol})`}
+                        <BlockListItem 
+                            stock={s}
+                            key={i} 
                             onClickItem={props.onClickItem.bind(stock.symbol)}
                             favs={props.favs}
                             onClickFavourite={props.onClickFavourite.bind(null, s)}

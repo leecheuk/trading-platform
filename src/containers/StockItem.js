@@ -1,35 +1,28 @@
 import React, {useState, useEffect} from "react";
 import BlockListItem from "../components/BlockListItem";
 import alpha from "../api/alpha";
-import quotes from "../seed/quote.json";
-
+import BlockList from "../components/BlockList";
 
 function StockItem(props) {
     const { stock, i } = props;
     const [data, setData] = useState([]);
-    const symbol = stock["1. symbol"];
+    const symbol = stock.symbol;
     useEffect(() => {
         const fetchData = async () => {
             const url = alpha.getQuoteURL(symbol);
             const data = await alpha.getData(url);
-            setData(data["Global Quote"]);
+            setData(alpha.sanitizeQuote(data));
         }
-        if (process.env.NODE_ENV !== "development") {
-            fetchData();
-        } else {
-            setData(quotes["Global Quote"]);
-        }
-    });
+        fetchData();
+    }, []);
 
     return (
         <>
             <BlockListItem 
-                key={i} 
-                quote={data["05. price"]}
-                title={`${stock["2. name"]} (${symbol})`}
-                symbol={symbol}
-                onClickSell={props.onClickSell} 
-                type={"portfoliolist"} />
+                {...props}
+                symbol={stock.symbol}
+                favourite={stock.isFavourite}
+                quote={data.price}/>
         </>
     );
 }

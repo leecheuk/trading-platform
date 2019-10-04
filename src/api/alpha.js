@@ -48,6 +48,3 @@ const alpha = {
 }
 
 export default alpha;
-
-alpha.sanitizeQuote(quote);
-console.log(alpha.sanitizeSearch(search));

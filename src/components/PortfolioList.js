@@ -7,7 +7,11 @@ function PortfolioList(props) {
     return (
         <BlockList>
             {data.length > 0 ? data.map((stock, i) =>
-                <StockItem stock={stock} i={i} key={i} onClickSell={props.onClickSell}/>
+                <StockItem
+                    key={i}
+                    onClickSell={props.onClickSell}
+                    stock={stock}
+                    type={"portfoliolist"} />
             ) : null}
         </BlockList>
     );

@@ -35,11 +35,7 @@ function Dashboard(props) {
             const stocks = await alpha.getData(url);
             setData(alpha.sanitizeSearch(stocks));
         }
-        if (query !== "" && process.env.NODE_ENV !== "development") {
-            fetchData();
-        } else {
-            setData(alpha.sanitizeSearch(search_results));
-        }
+        fetchData();
     }, [query]);
 
     // favourite
@@ -67,15 +63,12 @@ function Dashboard(props) {
         props.history.push(`/transaction/${symbol}?type=Sell`);
     }
 
-    const isDev = (process.env.NODE_ENV === "development");
-    const portfolio = isDev ? search_results.bestMatches : data;
-
     function renderList() {
         if (query === "") {
             switch (tab) {
                 case "portfoliolist":
                     return (
-                        <PortfolioList data={portfolio} onClickSell={onClickSell} />
+                        <PortfolioList data={data} onClickSell={onClickSell} />
                     );
                 case "watchlist":
                     return (

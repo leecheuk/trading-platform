@@ -10,6 +10,10 @@ function BlockListItem(props) {
     }
 
     function renderView() {
+        const {stock, quote} = props;
+        const title = `${stock.name} (${stock.symbol})`;
+        const favourite = stock.isFavourite;
+
         switch(props.type) {
             case "searchlist":
                 return (
@@ -18,9 +22,9 @@ function BlockListItem(props) {
                             <div className="block-left">
                                 <FavouriteBtn 
                                     onClickFavourite={props.onClickFavourite} 
-                                    favourite={props.favourite}/>
+                                    favourite={favourite}/>
                                 <div className="text-container">
-                                    <div className="title"> {props.title}</div>
+                                    <div className="title"> {title}</div>
                                     <div className="subtitle">{props.subtitle}</div>
                                 </div>
                             </div>
@@ -37,9 +41,9 @@ function BlockListItem(props) {
                         <div className="main">
                             <div className="block-left">
                                 <div className="text-container">
-                                    <div className="title">{props.title}</div>
+                                    <div className="title">{title}</div>
                                     <div className="subtitle">
-                                        <span className="quote">{parseFloat(props.quote).toFixed(2)}</span> ●
+                                        <span className="quote">{parseFloat(quote).toFixed(2)}</span> ●
                                     <span className="gain"> {`${1.2}%`}</span> ●
                                     <span className="quantity"> {props.quantity}</span>
                                     </div>
@@ -61,13 +65,12 @@ function BlockListItem(props) {
                             <div className="block-left">
                                 <FavouriteBtn
                                     onClickFavourite={props.onClickFavourite}
-                                    favourite={props.favourite} />
+                                    favourite={favourite} />
                                 <div className="text-container">
-                                    <div className="title"> {props.title} </div>
+                                    <div className="title"> {title} </div>
                                     <div className="subtitle">
-                                        <span className="quote">{parseFloat(props.quote).toFixed(2)}</span> ●
-                                    <span className="gain"> {`${1.2}%`}</span> ●
-                                    <span className="quantity"> {props.quantity}</span>
+                                        <span className="quote">{quote}</span> ●
+                                        <span className="gain"> {`${1.2}%`}</span> 
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +86,7 @@ function BlockListItem(props) {
                         <div className="main">
                             <div className="block-left">
                                 <div className="text-container">
-                                    <div className="title">{props.title}</div>
+                                    <div className="title">{title}</div>
                                     <div className="subtitle">{props.subtitle}</div>
                                 </div>
                             </div>
