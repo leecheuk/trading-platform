@@ -19,11 +19,8 @@ const db = {
     removeFavouriteListener: () => {
         ipcRenderer.removeAllListeners(['favourites', 'favourite-stock']);
     },
-    buyOrder: (stock) => {
-        ipcRenderer.send('buy-order', stock);
-    },
-    sellOrder: (stock) => {
-        ipcRenderer.send('sell-order', stock);
+    order: (stock) => {
+        ipcRenderer.send(`${stock.type}-order`, stock);
     },
     getPortfolio: (callback) => {
         db._getResource('portfolio', callback);
@@ -33,6 +30,9 @@ const db = {
         ipcRenderer.on(resource, (e, res) => {
             callback(res);
         });
+    },
+    getUser: (callback) => {
+        db._getResource('user', callback);
     }
 }
 

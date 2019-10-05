@@ -18,7 +18,7 @@ function TransactionForm(props) {
             <tbody>
                 <tr>
                     <td>{stockName}</td>
-                    <td>{price.toFixed(2)}</td>
+                    <td>{price}</td>
                     <td style={{ width: '200px' }}>
                         <input className="form-control" type="number"
                             onChange={props.onChangeQuantity} 

@@ -10,7 +10,7 @@ function Checkout(props) {
         <Layout>
             <h1 className="title">{params.get('type')}</h1>
             <LayoutBlock>
-                <Transaction history={props.history} />
+                <Transaction history={props.history} type={params.get('type')}/>
             </LayoutBlock>
         </Layout>
     )

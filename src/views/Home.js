@@ -1,14 +1,15 @@
 import React from "react";
 // components
-import BalanceSummary from "../components/BalanceSummary";
 import Layout from "../components/Layout";
 import LayoutBlock from "../components/LayoutBlock";
+// containers
+import Balance from "../containers/Balance";
 import Dashboard from "../containers/Dashboard";
 
 function Home(props) {
     return (
         <Layout>
-            <BalanceSummary/>
+            <Balance/>
             <LayoutBlock>
                 <Dashboard history={props.history}/>
             </LayoutBlock>

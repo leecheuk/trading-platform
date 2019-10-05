@@ -69,8 +69,9 @@ function BlockListItem(props) {
                                 <div className="text-container">
                                     <div className="title"> {title} </div>
                                     <div className="subtitle">
-                                        <span className="quote">{quote}</span> ●
-                                        <span className="gain"> {`${1.2}%`}</span> 
+                                        <span className="quote">${quote}</span>
+                                         {/* ●
+                                        <span className="gain"> {`${1.2}%`}</span>  */}
                                     </div>
                                 </div>
                             </div>

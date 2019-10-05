@@ -7,8 +7,6 @@ import WatchList from "../components/WatchList";
 import NavTab from "../components/NavTab";
 import db from "../api/db";
 
-// dummy data
-import search_results from "../seed/search.json";
 
 function Dashboard(props) {
     // tab
