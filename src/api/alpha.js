@@ -2,20 +2,31 @@ import { URL_ALPHA } from '../config';
 import util from '../util';
 import quote from "../seed/quote.json";
 import search from "../seed/search.json";
+import db from "./db";
 
 const alpha = {
-    getToken: function () {
-        return process.env.REACT_APP_ALPHA_API_KEY;
+    getToken: function (callback) {
+        if (util.isDev) {
+            callback(process.env.REACT_APP_ALPHA_API_KEY);
+        } else {
+            db.getAPI((token) => {
+                callback(token);
+            });
+        }
     },
-    getQuoteURL: function (symbol) {
-        const token = this.getToken();
-        const url = `${URL_ALPHA}?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${token}`;
-        return util.isDev ? "quote" : url;
+    getQuoteURL: function (symbol, callback) {
+        this.getToken((token) => {
+            const url = `${URL_ALPHA}?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${token}`;
+            const ret = util.isDev ? "quote" : url;
+            callback(ret);
+        });
     },
-    getSearchURL: function (query) {
-        const token = this.getToken();
-        const url = `${URL_ALPHA}?function=SYMBOL_SEARCH&keywords=${query}&apikey=${token}`;
-        return util.isDev ? "search" : url;
+    getSearchURL: function (query, callback) {
+        this.getToken((token) => {
+            const url = `${URL_ALPHA}?function=SYMBOL_SEARCH&keywords=${query}&apikey=${token}`;
+            const ret = util.isDev ? "search" : url;
+            callback(ret);
+        });
     },
     getData: async function (url) {
         switch(url) {

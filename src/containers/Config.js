@@ -6,8 +6,6 @@ import db from "../api/db";
 function Config() {
     const [apiKey, setApiKey] = useState("");
     const [curApi, setCurApi] = useState("");
-    const API_KEY = (process.env.NODE_ENV === "development") ?
-        process.env.REACT_APP_ALPHA_API_KEY : "None";
     useEffect(() => {
         db.getAPI((api) => {
             setCurApi(api);

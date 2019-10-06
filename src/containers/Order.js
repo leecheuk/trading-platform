@@ -6,12 +6,14 @@ function Order(props) {
     const [quote, setQuote] = useState({});
     useEffect(() => {
         let isSubscribed = true;
-        const fetchData = async () => {
-            const url = alpha.getQuoteURL(props.data.symbol);
-            const q = await alpha.getData(url);
-            if (isSubscribed) {
-                setQuote(alpha.sanitizeQuote(q).price);
-            }
+        const fetchData = () => {
+            alpha.getQuoteURL(props.data.symbol, (url) => {
+                alpha.getData(url).then((q) => {
+                    if (isSubscribed) {
+                        setQuote(alpha.sanitizeQuote(q).price);
+                    }
+                });
+            });
         }
         fetchData();
         return () => {

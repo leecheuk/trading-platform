@@ -8,12 +8,20 @@ function StockItem(props) {
     const [data, setData] = useState([]);
     const symbol = stock.symbol;
     useEffect(() => {
-        const fetchData = async () => {
-            const url = alpha.getQuoteURL(symbol);
-            const data = await alpha.getData(url);
-            setData(alpha.sanitizeQuote(data));
+        let isSubscribed = true;
+        const fetchData = () => {
+            alpha.getQuoteURL(symbol, (url) => {
+                alpha.getData(url).then((stock) => {
+                    if (isSubscribed) {
+                        setData(alpha.sanitizeQuote(stock));
+                    }
+                });
+            });
         }
         fetchData();
+        return () => {
+            isSubscribed = false;
+        }
     }, []);
 
     return (

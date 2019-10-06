@@ -13,12 +13,14 @@ function Transaction(props) {
     const symbol = props.match.params.symbol;
     useEffect(() => {
         let isSubscribed = true;
-        const fetchData = async () => {
-            const url = alpha.getQuoteURL(symbol);
-            const stock = await alpha.getData(url);
-            if (isSubscribed) {
-                setData(alpha.sanitizeQuote(stock));
-            }
+        const fetchData = () => {
+            alpha.getQuoteURL(symbol, (url) => {
+                alpha.getData(url).then((stock) => {
+                    if (isSubscribed) {
+                        setData(alpha.sanitizeQuote(stock));
+                    }
+                });
+            });
         }
         fetchData();
         return () => {
@@ -30,12 +32,14 @@ function Transaction(props) {
     const [stock, setStock] = useState({name: "NA"});
     useEffect(() => {
         let isSubscribed = true;
-        const fetchData = async () => {
-            const url = alpha.getSearchURL(symbol);
-            const stock = await alpha.getData(url);
-            if (isSubscribed) {
-                setStock(alpha.sanitizeSearch(stock)[0]);
-            }
+        const fetchData = () => {
+            alpha.getSearchURL(symbol, (url) => {
+                alpha.getData(url).then((stock) => {
+                    if (isSubscribed) {
+                        setStock(alpha.sanitizeSearch(stock)[0]);
+                    }
+                });
+            });
         }
         fetchData();
         return () => {

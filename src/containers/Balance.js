@@ -25,21 +25,25 @@ function Balance() {
     const [portfolioValue, setPortfolioValue] = useState(0);
     useEffect(() => {
         let isSubscribed = true;
-        db.getPortfolio((portfolio) => {
-            if (portfolio) {
-                let value = 0;
-                portfolio.forEach(p => {
-                    const url = alpha.getQuoteURL(p.symbol);
-                    alpha.getData(url).then((data) => {
-                        data = alpha.sanitizeQuote(data);
-                        value += data.price * p.quantity;
-                        if (isSubscribed) {
-                            setPortfolioValue(value);
-                        }
+        function fetchData() {
+            db.getPortfolio((portfolio) => {
+                if (portfolio) {
+                    let value = 0;
+                    portfolio.forEach(async (p) => {
+                        alpha.getQuoteURL(p.symbol, (url) => {
+                            alpha.getData(url).then((data) => {
+                                data = alpha.sanitizeQuote(data);
+                                value += data.price * p.quantity;
+                                if (isSubscribed) {
+                                    setPortfolioValue(value);
+                                }
+                            });
+                        });
                     });
-                });
-            }
-        });
+                }
+            });
+        }
+        fetchData();
 
         return () => {
             isSubscribed = false;

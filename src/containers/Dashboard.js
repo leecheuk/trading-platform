@@ -29,12 +29,14 @@ function Dashboard(props) {
     const [data, setData] = useState([]);
     useEffect(() => {
         let isSubscribed = true;
-        const fetchData = async () => {
-                const url = alpha.getSearchURL(query);
-                const stocks = await alpha.getData(url);
-            if (isSubscribed) {
-                setData(alpha.sanitizeSearch(stocks));
-            }
+        const fetchData = () => {
+            alpha.getSearchURL(query, (url) => {
+                alpha.getData(url).then((stocks) => {
+                    if (isSubscribed) {
+                        setData(alpha.sanitizeSearch(stocks));
+                    }
+                });
+            });
         }
         fetchData();
         return () => {
