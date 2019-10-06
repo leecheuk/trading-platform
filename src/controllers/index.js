@@ -28,6 +28,14 @@ const database = () => {
     });
     
     const ret = {
+        close: (callback) => {
+            db.close((err) => {
+                if (err) {
+                    console.log(err)
+                }
+                callback();
+            })
+        },
         initializeUser: (transaction_fee=7, balance=10000, api_key=null) => {
             var sql = "INSERT INTO Users (transaction_fee, balance, api_key) " + 
                 "VALUES (?, ?, ?)";

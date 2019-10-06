@@ -7,6 +7,7 @@ const isDev = require('electron-is-dev');
 
 // db
 const database = require('../src/controllers');
+const db = database();
 
 let mainWindow;
 
@@ -28,8 +29,7 @@ function createWindow() {
   }
   mainWindow.on('closed', () => mainWindow = null);
 
-  // db
-  const db = database();
+
   const ipcMain = electron.ipcMain;
 
   // api
