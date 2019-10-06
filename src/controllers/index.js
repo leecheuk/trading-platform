@@ -106,8 +106,44 @@ const database = () => {
                 if (err) {
                     console.log(err);
                 }
-                callback(this.lastID);
+                ret._getStock(stock, (row) => {
+                    if (row && row.id) {
+                        callback(row.id);
+                    } else {
+                        callback();
+                    }
+                });
             });
+        },
+        _updatePortfolio: (stockId, stock, callback) => {
+            // search if stock is in portfolio
+            var { symbol, quantity, price, portfolio_id, type } = stock;
+            switch (type) {
+                case "purchase":
+                    // insert new record for every new purchase since entry price might be different
+                    sql = "INSERT INTO Portfolio (stock_id, quantity, entry_price) VALUES (?, ?, ?)";
+                    db.run(sql, [stockId, quantity, price], (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        callback();
+                    })
+                    break;
+                case "sell":
+                    console.log('selling')
+                    // update record with the same entry price 
+                    sql = "UPDATE Portfolio SET quantity = quantity - ? WHERE id = ?";
+                    db.run(sql, [quantity, portfolio_id], (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        callback();
+                    })
+                    break;
+                default:
+                    callback();
+                    break;
+            }
         },
         _addPortfolioStock: (stock, callback) => {
             var { symbol } = stock;
@@ -116,7 +152,9 @@ const database = () => {
                 if (err) {
                     console.log(err);
                 }
-                callback(this.lastID);
+                ret._getStock(stock, (row) => {
+                    callback(row.id);
+                });
             });
         },
         _removePortfolioStock: (stock, callback) => {
@@ -126,7 +164,9 @@ const database = () => {
                 if (err) {
                     console.log(err);
                 }
-                callback(this.lastID);
+                ret._getStock(stock, (row) => {
+                    callback(row.id);
+                });
             });
         },
         _updateBalance: (balance, callback) => {
@@ -136,7 +176,7 @@ const database = () => {
                 if (err) {
                     console.log(err);
                 }
-                callback(this.lastID);
+                callback();
             });
         },
         getFavourites: (callback) => {
@@ -148,39 +188,43 @@ const database = () => {
                 callback(row);
             });
         },
-        buyOrder: (stock, callback) => {
+        purchaseOrder: (stock, callback) => {
             // check balance
             ret.getUser((row) => {
                 if (row.balance >= stock.price*stock.quantity + stock.transaction_fee) {
                     var balance = row.balance - stock.price * stock.quantity - stock.transaction_fee;
                     // update balance
                     ret._updateBalance(balance, () => {
-                        // check if stock is in db already
-                        ret._getStock((s) => {
-                            const { type, price, quantity, transaction_fee } = stock;
-                            var sql = "INSERT INTO Orders (type, stock_id, price, quantity, transaction_fee) VALUES (?, ?, ?, ?, ?)";
-                            if (s) {
-                                // update stock
-                                ret._addPortfolioStock(stock, (stockId) => {
-                                    db.run(sql, [type, stockId, price, quantity, transaction_fee], (err) => {
-                                        if (err) {
-                                            console.log(err);
-                                        }
-                                        callback();
+                            // check if stock is in db already
+                            ret._getStock(stock, (s) => {
+                                const { type, price, quantity, transaction_fee } = stock;
+                                var sql = "INSERT INTO Orders (type, stock_id, price, quantity, transaction_fee) VALUES (?, ?, ?, ?, ?)";
+                                if (s) {
+                                    // update stock
+                                    ret._addPortfolioStock(stock, (stockId) => {
+                                        ret._updatePortfolio(stockId, stock, () => {
+                                            db.run(sql, [type, stockId, price, quantity, transaction_fee], (err) => {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                                callback("success");
+                                            });
+                                        });
                                     });
-                                });
-                            } else {
-                                // create stock
-                                ret._addStock(stock, (stockId) => {
-                                    db.run(sql, [type, stockId, price, quantity, transaction_fee], (err) => {
-                                        if (err) {
-                                            console.log(err);
-                                        }
-                                        callback();
+                                } else {
+                                    // create stock
+                                    ret._addStock(stock, (stockId) => {
+                                        ret._updatePortfolio(stockId, stock, () => {
+                                            db.run(sql, [type, stockId, price, quantity, transaction_fee], (err) => {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                                callback("success");
+                                            });
+                                        });
                                     });
-                                });
-                            }
-                        });
+                                }
+                            });
                     });
                 } else {
                     callback();
@@ -188,34 +232,53 @@ const database = () => {
             });
         },
         sellOrder: (stock, callback) => {
-            // check quantity
-            ret.getUser((row) => {
-                if (row.quantity >= stock.quantity) {
-                    // update balance
-                    var balance = row.balance + stock.price * stock.quantity + stock.transaction_fee;
-                    ret._updateBalance(balance, () => {
-                        // remove stock from portfolio
-                        ret._removePortfolioStock(stock, (stockId) => {
-                            const { type, price, quantity, transaction_fee } = stock;
-                            var sql = "INSERT INTO Orders (type, stock_id, price, quantity, transaction_fee) VALUES (?, ?, ?, ?, ?)";
-                            db.run(sql, [type, stockId, price, quantity, transaction_fee], (err) => {
-                                if (err) {
-                                    console.log(err);
-                                }
-                                callback();
+            console.log(stock)
+            // check quantity from portfolio_id 
+            var sql = "SELECT * FROM Portfolio WHERE id = ?";
+            db.get(sql, [stock.portfolio_id], (err, row) => {
+                if (err) {
+                    console.log(err);
+                }
+                ret.getUser((user) => {
+                    if (row.quantity >= stock.quantity) {
+                        // update balance
+                        var balance = user.balance + stock.price * stock.quantity + stock.transaction_fee;
+                        ret._updateBalance(balance, () => {
+                            // remove stock from portfolio
+                            ret._removePortfolioStock(stock, (stockId) => {
+                                ret._updatePortfolio(stockId, stock, () => {
+                                    const { type, price, quantity, transaction_fee } = stock;
+                                    var sql = "INSERT INTO Orders (type, stock_id, price, quantity, transaction_fee) VALUES (?, ?, ?, ?, ?)";
+                                    db.run(sql, [type, stockId, price, quantity, transaction_fee], (err) => {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        callback();
+                                    });
+                                });
                             });
                         });
-                    });
-                }
+                    } else {
+                        callback();
+                    }
+                })
             });
         },
         getPortfolio: (callback) => {
-            var sql = "SELECT * FROM Stocks WHERE inPortfolio = true";
+            var sql = "SELECT *, Portfolio.id AS portfolio_id FROM Stocks INNER JOIN Portfolio ON Stocks.id = Portfolio.stock_id";
             db.all(sql, [], (err, row) => {
                 if (err) {
                     console.log(err);
                 }
-                console.log('all', row)
+                callback(row);
+            });
+        },
+        getPortfolioStock: (portfolio_id, callback) => {
+            var sql = "SELECT * FROM Portfolio WHERE id = ?";
+            db.get(sql, [portfolio_id], (err, row) => {
+                if (err) {
+                    console.log(err);
+                }
                 callback(row);
             });
         },

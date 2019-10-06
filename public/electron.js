@@ -53,23 +53,32 @@ function createWindow() {
     })
   });
   // orders
-  ipcMain.on('purchase-order', () => {
-
+  ipcMain.on('purchase-order', (e, stock) => {
+    db.purchaseOrder(stock, () => {
+      e.reply('purchase', "success");
+    });
   });
-  ipcMain.on('sell-order', () => {
-
+  ipcMain.on('sell-order', (e, stock) => {
+    db.sellOrder(stock, () => {
+      e.reply('sell', "success");
+    });
   });
   // user
   ipcMain.on('get-user', (e) => {
     db.getUser((user) => {
       e.reply('user', user);
-    })
+    });
   });
   // portfolio
   ipcMain.on('get-portfolio', (e) => {
     db.getPortfolio((portfolio) => {
       e.reply('portfolio', portfolio);
-    })
+    });
+  });
+  ipcMain.on('get-portfolio-stock', (e, stock_id) => {
+    db.getPortfolioStock(stock_id, (portfolio) => {
+      e.reply('portfolio-stock', portfolio);
+    });
   });
 }
 

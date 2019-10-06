@@ -6,9 +6,9 @@ function BalanceSummary(props) {
     const total = cash + portfolioValue;
     return (
         <div className="balance-summary">
-            <div className="total">${total}</div>
-            <div className="cash">${cash} Cash</div>
-            <div className="portfolio">${portfolioValue} Security</div>
+            <div className="total">${parseInt(total).toFixed(2)}</div>
+            <div className="cash">${parseInt(cash).toFixed(2)} Cash</div>
+            <div className="portfolio">${parseInt(portfolioValue).toFixed(2)} Security</div>
         </div>
     )
 }

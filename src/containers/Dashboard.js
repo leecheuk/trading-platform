@@ -25,7 +25,7 @@ function Dashboard(props) {
     const onClickCancel = () => {
         setQuery("");
     }
-    // data
+    // search data
     const [data, setData] = useState([]);
     useEffect(() => {
         let isSubscribed = true;
@@ -69,9 +69,25 @@ function Dashboard(props) {
         }
     }, []);
 
+    // portfolio
+    const [portfolio, setPortfolio] = useState([]);
+    useEffect(() => {
+        let isSubscribed = true;
+        db.getPortfolio((row) => {
+            if (isSubscribed) {
+                setPortfolio(row);
+            }
+        });
+        return () => {
+            isSubscribed = false;
+            db.removePortfolioListener();
+        }
+    }, []);
+
+
     // sell
-    const onClickSell = (symbol) => {
-        props.history.push(`/transaction/${symbol}?type=Sell`);
+    const onClickSell = (symbol, portfolio_id) => {
+        props.history.push(`/transaction/${symbol}?type=Sell&portfolio_id=${portfolio_id}`);
     }
 
     function renderList() {
@@ -79,7 +95,7 @@ function Dashboard(props) {
             switch (tab) {
                 case "portfoliolist":
                     return (
-                        <PortfolioList data={data} onClickSell={onClickSell} />
+                        <PortfolioList data={portfolio} onClickSell={onClickSell} />
                     );
                 case "watchlist":
                     return (

@@ -4,7 +4,7 @@ const stockSchema = `
         name TEXT NOT NULL,
         symbol TEXT NOT NULL,
         isFavourite BOOLEAN NOT NULL,
-        inPortfolio BOOLEAN NOT NULL 
+        inPortfolio BOOLEAN NOT NULL
     );
 `
 module.exports = stockSchema;

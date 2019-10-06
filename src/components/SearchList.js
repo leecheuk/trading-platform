@@ -19,7 +19,7 @@ function SearchList(props) {
                         <BlockListItem 
                             stock={s}
                             key={i} 
-                            onClickItem={props.onClickItem.bind(stock.symbol)}
+                            onClickItem={props.onClickItem.bind(null, stock.symbol)}
                             favs={props.favs}
                             onClickFavourite={props.onClickFavourite.bind(null, s)}
                             type={"searchlist"} />

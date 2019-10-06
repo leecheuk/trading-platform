@@ -6,9 +6,11 @@ import TransactionForm from "../components/TransactionForm";
 import CheckoutBtns from "../components/CheckoutBtns";
 
 function Transaction(props) {
+    const params = new URLSearchParams(props.history.location.search);
+    const portfolio_id = params.get('portfolio_id');
     // quote data
     const [data, setData] = useState({price: "NA"});
-    const symbol = props.symbol;
+    const symbol = props.match.params.symbol;
     useEffect(() => {
         let isSubscribed = true;
         const fetchData = async () => {
@@ -32,7 +34,6 @@ function Transaction(props) {
             const url = alpha.getSearchURL(symbol);
             const stock = await alpha.getData(url);
             if (isSubscribed) {
-                console.log(stock);
                 setStock(alpha.sanitizeSearch(stock)[0]);
             }
         }
@@ -47,12 +48,29 @@ function Transaction(props) {
     useEffect(() => {
         let isSubscribed = true;
         db.getUser((u) => {
-            setUser(u);
-            console.log(u);
+            if (isSubscribed) {
+                setUser(u);
+            }
         });
 
         return () => {
             isSubscribed = false;
+            db.removeUserListener();
+        }
+    }, []);
+    // get stock info from portfolio for selling
+    const [portfolioStock, setPortfolioStock] = useState({});
+    useEffect(() => {
+        let isSubscribed = true;
+        db.getPortfolioStock(portfolio_id, (u) => {
+            if (isSubscribed) {
+                setPortfolioStock(u);
+            }
+        });
+
+        return () => {
+            isSubscribed = false;
+            db.removePortfolioStockListener();
         }
     }, []);
 
@@ -60,7 +78,7 @@ function Transaction(props) {
     const [quantity, setQuantity] = useState(1);
     function onChangeQuantity(e) {
         // limit quantity size
-        if (props.type == "Sell" && quantity <= user.holdingQuantity) {
+        if (props.type == "Sell" && e.target.value <= portfolioStock.quantity) {
             setQuantity(e.target.value);
         } else if (props.type == "Purchase" && user.balance >= data.price * e.target.value + 7) {
             setQuantity(e.target.value);
@@ -72,25 +90,28 @@ function Transaction(props) {
     function onClickSubmit() {
         const s = {
             name: stock.name,
-            symbol: stock.symbol,
+            symbol: symbol,
             quantity,
             type: props.type.toLowerCase(),
             price: data.price,
-            transaction_fee: stock.transaction_fee || 7
+            transaction_fee: 7,
+            portfolio_id
         }
         
-        db.order(s);
-        props.history.push('/');
+        db.order(s, () => {
+            props.history.push('/');
+        });
     }
+    const isOverbudget = data.price + 7 > user.balance;
     return (
             <>
                 <TransactionForm 
                     price={data.price}
-                    symbol={data.symbol}
+                    symbol={symbol}
                     name={stock.name}
                     quantity={quantity} 
                     onChangeQuantity={onChangeQuantity}/>
-                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} />
+                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} disabled={isOverbudget}/>
             </>
     )
 }

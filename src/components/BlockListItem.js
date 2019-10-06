@@ -30,7 +30,7 @@ function BlockListItem(props) {
                             </div>
                             <div className="block-right">
                                 <i className={`fas fa-angle-${showMinor ? "down" : "right"} fa-lg`}
-                                    onClick={props.onClickItem ? props.onClickItem : onClickItem}></i>
+                                    onClick={props.onClickItem}></i>
                             </div>
                         </div>
                     </li>
@@ -43,15 +43,16 @@ function BlockListItem(props) {
                                 <div className="text-container">
                                     <div className="title">{title}</div>
                                     <div className="subtitle">
-                                        <span className="quote">{parseFloat(quote).toFixed(2)}</span> ●
-                                    <span className="gain"> {`${1.2}%`}</span> ●
-                                    <span className="quantity"> {props.quantity}</span>
+                                        <span className="quote">@${parseFloat(props.stock.entry_price).toFixed(2)}</span> ●
+                                    
+                                    <span className="quantity"> {props.stock.quantity} shares</span> ●
+                                        <span className="gain"> {`${(props.quote - props.stock.entry_price) * 100 / props.stock.entry_price}%`}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="block-right">
                                     <button className="btn btn-info btn-sm" 
-                                        onClick={props.onClickSell.bind(null, props.symbol)}>
+                                        onClick={props.onClickSell.bind(null, props.symbol, props.stock.portfolio_id)}>
                                             Sell
                                     </button>
                             </div>

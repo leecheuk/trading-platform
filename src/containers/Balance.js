@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import db from "../api/db";
 import alpha from "../api/alpha";
 import BalanceSummary from "../components/BalanceSummary";
@@ -9,40 +9,48 @@ function Balance() {
     useEffect(() => {
         let isSubscribed = true;
         db.getUser((u) => {
-            setUser(u);
+            if (isSubscribed) {
+                setUser(u);
+            }
         });
 
         return () => {
             isSubscribed = false;
+            db.removeUserListener();
         }
     }, []);
 
     // portfolio
     // get portfolio of stocks then look up their prices
-    const [portfolio, setPortfolio] = useState([]);
-    const [portfolioValue, setPortfolioValue] = useState([]);
+    const [portfolioValue, setPortfolioValue] = useState(0);
     useEffect(() => {
+        let isSubscribed = true;
         db.getPortfolio((portfolio) => {
             if (portfolio) {
-                setPortfolio(portfolio);
                 let value = 0;
-                setPortfolioValue(0);
                 portfolio.forEach(p => {
                     const url = alpha.getQuoteURL(p.symbol);
-                    alpha.getData(url, (data) => {
+                    alpha.getData(url).then((data) => {
                         data = alpha.sanitizeQuote(data);
-                        value += data.price;
-                        setPortfolioValue(value);
+                        value += data.price * p.quantity;
+                        if (isSubscribed) {
+                            setPortfolioValue(value);
+                        }
                     });
                 });
             }
-        })
+        });
+
+        return () => {
+            isSubscribed = false;
+            db.removePortfolioListener();
+        }
     }, []);
 
 
     return (
         <>
-            <BalanceSummary user={user} portfolioValue={portfolioValue}/>
+            <BalanceSummary user={user} portfolioValue={portfolioValue} />
         </>
     )
 }
