@@ -6,7 +6,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 
 // db
-const database = require('../src/controllers');
+const database = require('./controllers');
 const db = database();
 
 let mainWindow;
@@ -21,7 +21,8 @@ function createWindow() {
   });
   mainWindow.setMenuBarVisibility(false);
   mainWindow.setResizable(false);
-  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  // mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
   if (isDev) {
     // Open the DevTools.
     //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
