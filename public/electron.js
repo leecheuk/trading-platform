@@ -63,6 +63,12 @@ function createWindow() {
       e.reply('sell', "success");
     });
   });
+  ipcMain.on('get-orders', (e) => {
+    db.getOrders((orders) => {
+      e.reply('orders', orders);
+    });
+  });
+  
   // user
   ipcMain.on('get-user', (e) => {
     db.getUser((user) => {

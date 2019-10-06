@@ -51,6 +51,12 @@ const db = {
     },
     removeUserListener: () => {
         ipcRenderer.removeAllListeners(['get-user']);
+    },
+    getOrders: (callback) => {
+        db._getResource('orders', callback);
+    },
+    removeOrdersListener: () => {
+        ipcRenderer.removeAllListeners(['get-orders', 'orders']);
     }
 }
 

@@ -283,7 +283,7 @@ const database = () => {
             });
         },
         getOrders: (callback) => {
-            var sql = "SELECT * FROM Orders";
+            var sql = "SELECT * FROM Orders INNER JOIN Stocks ON Orders.stock_id = Stocks.id";
             db.all(sql, [], (err, row) => {
                 if (err) {
                     console.log(err);
