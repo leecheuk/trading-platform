@@ -1,7 +1,7 @@
 import React from "react";
 import BlockList from "../components/BlockList";
-import BlockListItem from "../components/BlockListItem";
 import StockItem from "../containers/StockItem";
+import Placeholder from "../components/Placeholder";
 
 function WatchList(props) {
     const {data} = props;
@@ -17,7 +17,7 @@ function WatchList(props) {
                         onClickItem={props.onClickItem.bind(stock.symbol)} 
                         type={"watchlist"}/>
                     );
-            }) : null}
+            }) : <Placeholder />}
         </BlockList>
     );
 }

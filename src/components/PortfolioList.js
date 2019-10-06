@@ -1,6 +1,7 @@
 import React from "react";
 import BlockList from "../components/BlockList";
 import StockItem from "../containers/StockItem";
+import Placeholder from "../components/Placeholder";
 
 function PortfolioList(props) {
     const {data} = props;
@@ -12,7 +13,7 @@ function PortfolioList(props) {
                     onClickSell={props.onClickSell}
                     stock={stock}
                     type={"portfoliolist"} />
-            ) : null}
+            ) : <Placeholder />}
         </BlockList>
     );
 }

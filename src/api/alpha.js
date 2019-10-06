@@ -40,6 +40,9 @@ const alpha = {
         }
     },
     sanitizeQuote: function (quoteObj) {
+        if (quoteObj["Error Message"]) {
+            return {};
+        }
         if (quoteObj["Global Quote"]) {
             quoteObj = quoteObj["Global Quote"];
         }
@@ -51,6 +54,9 @@ const alpha = {
         return obj;
     },
     sanitizeSearch: function (searchObj) {
+        if (searchObj["Error Message"] || searchObj["Note"]) {
+            return [];
+        }
         if (searchObj["bestMatches"]) {
             searchObj = searchObj["bestMatches"];
         }

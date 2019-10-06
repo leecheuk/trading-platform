@@ -8,10 +8,10 @@ import 'bootstrap';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 // router
-import {BrowserRouter as Router} from "react-router-dom";
+import {MemoryRouter as Router} from "react-router-dom";
 
 ReactDOM.render(
-    <Router>
+    <Router initialEntries={["/"]}>
         <App />
     </Router>, 
     document.getElementById('root')

@@ -20,11 +20,14 @@
     "url": "https://leecheuk.netlify.com"
   },
   "build": {
-    "appId": "com.my-website.my-app",
+    "appId": "com.leecheuk.netlify.trading-platform",
     "productName": "Trading Platform",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "NSIS"
     },
     "files": [
       "build/**/*",
@@ -38,13 +41,14 @@
   "homepage": "./",
   "scripts": {
     "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
+    "eject": "rescripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build -mw",
-    "build": "rescripts build",
-    "test": "rescripts test",
-    "eject": "rescripts eject"
+    "clear-db": "rm -f ./db/app.db && touch ./db/app.db",
+    "electron-pack": "yarn clear-db && electron-builder -l"
   },
   "eslintConfig": {
     "extends": "react-app"

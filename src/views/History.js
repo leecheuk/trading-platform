@@ -7,7 +7,7 @@ function History() {
     return (
         <Layout>
             <h1 className="title">History</h1>
-            <LayoutBlock>
+            <LayoutBlock table>
                 <OrderList />
             </LayoutBlock>
         </Layout>

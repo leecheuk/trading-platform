@@ -144,6 +144,9 @@ h1.title {
 .transaction-table td:last-child {
   text-align: right;
 }
+.table-block {
+  height: 500px;
+}
 
 /* Search list */
 .fav {
@@ -174,4 +177,14 @@ h1.title {
 }
 .nav-tab .tab:hover, .nav-tab .tab.active {
   border-bottom: 4px solid #03aef8;
+}
+/* Placeholder */
+.placeholder-container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+.placeholder {
+  margin: auto;
+  color: #ddd;
 }

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import OrderTable from "../components/OrderTable";
 import Order from "../containers/Order";
 import db from "../api/db";
+import Placeholder from "../components/Placeholder";
 
 function OrderList() {
     const [history, setHistory] = useState([]);
@@ -18,6 +19,9 @@ function OrderList() {
             db.removeOrdersListener();
         }
     }, []);
+    if (history.length === 0) {
+        return <Placeholder />
+    }
     return (
         <>
             <OrderTable>

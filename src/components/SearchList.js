@@ -1,6 +1,7 @@
 import React from "react";
 import BlockList from "../components/BlockList";
 import BlockListItem from "../components/BlockListItem";
+import Placeholder from "../components/Placeholder";
 
 function SearchList(props) {
     const data = props.data;
@@ -27,7 +28,7 @@ function SearchList(props) {
                 } else {
                     return;
                 }
-            }) : null}
+            }) : <Placeholder />}
         </BlockList>
     );
 }
