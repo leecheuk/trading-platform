@@ -116,7 +116,8 @@ function Transaction(props) {
                     name={stock.name}
                     quantity={quantity} 
                     onChangeQuantity={onChangeQuantity}/>
-                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} disabled={isOverbudget || stock.name === "NA"}/>
+                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} 
+                    disabled={isOverbudget || stock.name === "NA" || data.price === "NA"}/>
             </>
     )
 }
