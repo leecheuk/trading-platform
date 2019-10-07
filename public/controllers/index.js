@@ -244,7 +244,6 @@ const database = () => {
             });
         },
         sellOrder: (stock, callback) => {
-            console.log(stock)
             // check quantity from portfolio_id 
             var sql = "SELECT * FROM Portfolio WHERE id = ?";
             db.get(sql, [stock.portfolio_id], (err, row) => {
@@ -254,7 +253,7 @@ const database = () => {
                 ret.getUser((user) => {
                     if (row.quantity >= stock.quantity) {
                         // update balance
-                        var balance = user.balance + stock.price * stock.quantity + stock.transaction_fee;
+                        var balance = user.balance + stock.price * stock.quantity - stock.transaction_fee;
                         ret._updateBalance(balance, () => {
                             // remove stock from portfolio
                             ret._removePortfolioStock(stock, (stockId) => {
