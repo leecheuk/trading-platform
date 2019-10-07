@@ -36,7 +36,8 @@ function Transaction(props) {
             alpha.getSearchURL(symbol, (url) => {
                 alpha.getData(url).then((stock) => {
                     if (isSubscribed) {
-                        setStock(alpha.sanitizeSearch(stock)[0]);
+                        stock = stock.length > 0 ? alpha.sanitizeSearch(stock)[0] : {name: "NA"}
+                        setStock(stock);
                     }
                 });
             });
@@ -115,7 +116,7 @@ function Transaction(props) {
                     name={stock.name}
                     quantity={quantity} 
                     onChangeQuantity={onChangeQuantity}/>
-                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} disabled={isOverbudget}/>
+                <CheckoutBtns onClickCancel={onClickCancel} onClickSubmit={onClickSubmit} disabled={isOverbudget || stock.name === "NA"}/>
             </>
     )
 }
