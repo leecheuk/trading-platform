@@ -1,9 +1,13 @@
 const dbSchema = require('../models');
+const isDev = require('electron-is-dev');
+const remote = require('electron');
+const path = require('path');
+const app = remote.app;
 
 const database = () => {
     const sqlite3 = require('sqlite3');
-
-    let db = new sqlite3.Database('./db/app.db', (err) => {
+    let dbPath = isDev ? path.resolve(__dirname + '/../db/', 'app.db') : app.getPath('userData') + '/app.db';
+    let db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
         if (err) {
             console.error(err.message);
             return;

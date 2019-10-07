@@ -47,7 +47,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "clear-db": "rm -f ./db/app.db && touch ./db/app.db",
+    "clear-db": "rm -f ./public/db/app.db && touch ./public/db/app.db",
     "electron-pack": "yarn clear-db && electron-builder -l"
   },
   "eslintConfig": {
