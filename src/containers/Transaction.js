@@ -36,7 +36,7 @@ function Transaction(props) {
             alpha.getSearchURL(symbol, (url) => {
                 alpha.getData(url).then((stock) => {
                     if (isSubscribed) {
-                        stock = stock.length > 0 ? alpha.sanitizeSearch(stock)[0] : {name: "NA"}
+                        stock = alpha.sanitizeSearch(stock).length > 0 ? alpha.sanitizeSearch(stock)[0] : {name: "NA"}
                         setStock(stock);
                     }
                 });
